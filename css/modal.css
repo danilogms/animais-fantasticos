@@ -1,0 +1,100 @@
+.modal-container { /*Cobrirá o site de ponta a ponta */
+  height: 100vh;
+  width: 100%;
+  background: rgba(0,0,0,.5);
+  position: fixed;
+  top: 0;
+  left: 0; 
+  z-index: 2000;
+  display: none;  /*Display none por padrao pois ele se torna ativo apenas quando clicado */
+  align-items: center;
+  justify-content: center;
+ /* Essas configurações fazem o modal ficar fixo na parte superior da tela */
+}
+
+.modal-container.ativo { /*  Neste caso quando for adicionado a classe ativo ele fica visivel */
+  display: flex;
+}
+
+.modal {  /*configurações do box modal */
+  min-width: 300px;
+  background: white;
+  padding: 40px;
+  border: 10px solid #fb5;
+  box-shadow: 0 0 0  10px white;
+  position: relative;
+}
+
+/* Animação do modal, vindo de cima pra baixo esquerda para direita */
+
+@keyframes modal {
+  from{
+    opacity: 0;
+    transform: translate3d(0, -30px,0);
+  }
+  to{
+    opacity: 1;
+    transform: translate3d(0, 0,0);
+  }
+}
+
+.ativo .modal {
+  animation: modal .3s forwards;  /*forwards = pra fazer a mesma animação ao voltar*/
+}
+
+
+
+/* Configurações do Botao fechar */
+
+.fechar {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid white;
+  background: #e54;
+  font-size: 1.2em;
+  color: white;
+  font-family: 'IBM Plex mono',monospace;
+  cursor: pointer;
+}
+
+.fechar:hover {
+  opacity: .6;
+}
+
+
+/* Configurações do Email/Senha */
+
+.modal label {
+  font-family: 'IBM Plex mono',monospace;
+  display: block;
+  font-weight: bold;
+  margin: 1rem 0 .5rem 0;
+}
+
+/* Configurações Input */
+
+.modal input {
+  width: 100%;
+  padding: .5rem .5rem ;
+  box-sizing: border-box;
+}
+
+.entrar {
+  cursor: pointer;
+  background: #e54;
+  border: none;
+  border-radius: 4px;
+  padding: .7rem .2rem;
+  color: white;
+  margin-top: 10px;
+  font-family: 'IBM Plex mono',monospace;
+  font-weight: bold;
+}
+
+.entrar:hover {
+  opacity: .6;
+}
