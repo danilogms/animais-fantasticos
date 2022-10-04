@@ -1,23 +1,36 @@
-export default function initAccordion(){
-  const accordionList = document.querySelectorAll('[data-ativo="accordion"] dt');
-  const activeClass = 'ativo';
-  
-  function activeAccordion(){
-    this.nextElementSibling.classList.toggle(activeClass);
-    this.classList.toggle(activeClass);
+export default class Accordion {
+  constructor(list) {
+    this.accordionList = document.querySelectorAll(list);
+    this.activeClass = "ativo";
+  }
+
+  activeAccordion() {
+    this.nextElementSibling.classList.toggle(this.activeClass);
+    this.classList.toggle(this.activeClass);
     //console.log(event.currentTarget);  Também podemos usar, dana mesma
     //Neste caso o this fla com cada ITEM que esteja sendo clicado
   }
 
-  if(accordionList.length){
-    accordionList[0].classList.add(activeClass)
-    accordionList[0].nextElementSibling.classList.add(activeClass)
-    
-    accordionList.forEach((list) => {
-      list.addEventListener('click', activeAccordion);
-    });
-    }
+  toggleAccordion(item) {
+    item.classList.toggle(this.activeClass);
+    item.nextElementSibling.classList.toggle(this.activeClass);
   }
 
+  //adiciona os eventos ao acordion
 
+  addAccordionEvent() {
+    this.accordionList.forEach((item) => {
+      item.addEventListener("click", () => this.toggleAccordion(item));
+    });
+  }
 
+  //inicia a função
+
+  init() {
+    if (this.accordionList.length) {
+      //ativar primeiro item
+      this.toggleAccordion(this.accordionList[0]);
+      this.addAccordionEvent();
+    }
+  }
+}
