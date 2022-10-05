@@ -26,5 +26,6 @@ export default class TabNav {
       //Ativar primeiro item da lista 
       this.activeTab(0);
     }
+    return this
   }
 }
