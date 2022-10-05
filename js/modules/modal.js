@@ -1,30 +1,43 @@
-export default function initModal() {
+export default class Modal {
   //Primeiro selecionamos todos os botoes que iremos crira ações, sendo estes, abrir, fechar, modal em si
-
-  const botaoAbrir = document.querySelector('[data-modal="abrir"]'); //Botao do Login
-  const botaoFechar = document.querySelector('[data-modal="fechar"]'); //Botao de fechar
-  const containerModal = document.querySelector('[data-modal="container"]'); //Onde adicionaremos a classe ativo
-
-  function abrirModal(event) {
-    event.preventDefault();
-    containerModal.classList.add("ativo");
+  constructor(botaoAbrir, botaoFechar, containerModal) {
+    this.botaoAbrir = document.querySelector(botaoAbrir); //Botao do Login
+    this.botaoFechar = document.querySelector(botaoFechar); //Botao de fechar
+    this.containerModal = document.querySelector(containerModal); //Onde adicionaremos a classe ativo
+    //bind This ao cllback para fazer referencia ao objeto da classe
+    this.eventToggleModal = this.eventToggleModal.bind(this);
+    this.clickForaModal = this.clickForaModal.bind(this);
   }
 
-  function fecharModal(event) {
-    event.preventDefault();
-    containerModal.classList.remove("ativo");
+  //modal abrir ou fechar
+  toggleModal() {
+    this.containerModal.classList.toggle("ativo");
   }
 
-  function clickForaModal(event) {
-    if (event.target === this) {
-      fecharModal(event);
+  //Adiciona evento de toggle ao modal
+  eventToggleModal(event) {
+    event.preventDefault();
+    this.toggleModal();
+  }
+
+  //Padrao para fechar modal ao clicar do lado de fora do item
+  clickForaModal(event) {
+    if(event.target === this.containerModal) {
+      this.toggleModal();
     } //usamos a função de fechar dentro da função ativa quando clicamos fora do modal.
   }
-  if (botaoAbrir && botaoFechar && containerModal) {
-    //Verificar se existem as constantes acima para iniciar as funções
-    //Adicionando click e funções aos botoes
-    botaoAbrir.addEventListener("click", abrirModal);
-    botaoFechar.addEventListener("click", fecharModal);
-    containerModal.addEventListener("click", clickForaModal); //Esse é o padrão de modais, clicar fora da area do modal faz fechar a caixa de dialogo
+
+  //Adicionando os eventos aos elementos do modal
+  addEvents() {
+    this.botaoAbrir.addEventListener("click", this.eventToggleModal);
+    this.botaoFechar.addEventListener("click", this.eventToggleModal);
+    this.containerModal.addEventListener("click", this.clickForaModal);
+  }
+
+  init() {
+    if (this.botaoAbrir && this.botaoFechar && this.containerModal) {
+      this.addEvents();
+    }
+    return this
   }
 }
