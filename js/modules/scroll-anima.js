@@ -2,26 +2,49 @@ export default class ScrollAnima {
   constructor(sections) {
     this.sections = document.querySelectorAll(sections);
     this.windowMetade = window.innerHeight * 0.6;
-
-    //bind
-    this.animaScroll = this.animaScroll.bind(this);
+    
+    //Bind
+    this.checkDistance = this.checkDistance.bind(this)
   }
 
-  animaScroll() {
-    this.sections.forEach((section) => {
-      const sectionTop = section.getBoundingClientRect().top; //DESCOBRINDO QUAL A DISTANCIA DE CADA ELEMENTO DESTA VARIAVEL ESTA DO TOPO DO SITE
-      const metadeAtiva = (sectionTop - this.windowMetade) < 0; //PARA NÃO OCORRER DO SCROLL DO SITE BUGAR, SEMPRE IRÁ ATIVAR O SCRIPT QD CHEGAR A 60% DO SECTIONtOP
-      if (metadeAtiva) {
-        section.classList.add("ativo");
-      } else if (section.classList.contains("ativo")) {
-        section.classList.remove("ativo");
+  //Pega a distancia de cada item em relação ao topo da pagina
+  getDistance() {
+    this.distance = [...this.sections].map((section) => {
+      const offset = section.offsetTop;
+      return {
+        element: section,
+        offset: Math.floor(offset - this.windowMetade),
+      };
+    });
+  }
+
+
+  //Verifica a distancia em cada objeto em relação ao Scroll do site
+  checkDistance() {
+    this.distance.forEach((item) => {
+      if (window.pageYOffset > item.offset) {
+        item.element.classList.add('ativo');
+      } else if (item.element.classList.contains('ativo')) {
+        item.element.classList.remove('ativo');
       }
     });
   }
 
+ 
+
   init() {
-    this.animaScroll();
-    window.addEventListener("scroll", this.animaScroll); // USAMOS WINDOW PQ ESTAMOS FALANDO COM A JANELA EM GERAL}
+    if(this.sections.length){
+      this.getDistance();
+      this.checkDistance();
+      window.addEventListener("scroll", this.checkDistance); // NAO ESQUECER O BIND
+    }
     return this
   }
+
+
+  //Remove o Event de Scroll
+  stop() {
+    window.removeEventListener("scroll", this.checkDistance)
+  }
+
 }
