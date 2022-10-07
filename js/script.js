@@ -39,5 +39,5 @@ const funcionamento = new Funcionamento("[data-semana]", "aberto");
 funcionamento.init();
 
 
-animaisFetch('../../animais-api.json','.numeros-grid');
+animaisFetch('./animais-api.json','.numeros-grid');
 bitcoinFetch('https://blockchain.info/ticker', '.btc-preco')
