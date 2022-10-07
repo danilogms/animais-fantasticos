@@ -10,6 +10,7 @@ import animaisFetch from "./modules/animais-fetch.js";
 import bitcoinFetch from "./modules/bitcoin-fetch.js";
 import ScrollAnima from "./modules/scroll-anima.js";
 
+
 const scrollSuave = new ScrollSuave('[data-menu="suave"] a[href^="#"]');
 scrollSuave.init();
 
